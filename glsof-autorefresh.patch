@@ -1,0 +1,143 @@
+diff -urN glsof-0.9.16.oryg/src/autorefresh.c glsof-0.9.16/src/autorefresh.c
+--- glsof-0.9.16.oryg/src/autorefresh.c	2004-09-20 02:08:15.865379848 +0200
++++ glsof-0.9.16/src/autorefresh.c	2004-09-20 02:09:20.962483584 +0200
+@@ -5,6 +5,7 @@
+ #include "file_selection.h"
+ #include "refresh.h"
+ #include "international.h"
++#include "interface.h"
+ 
+ 
+ static GtkWidget *window;
+@@ -23,11 +24,6 @@
+ static gdouble spin1 = 1;
+ static gdouble spin2 = 1;
+ static gboolean state_save=TRUE;
+-static gboolean refresh_started = FALSE;
+-
+-/* interface */
+-extern GtkWidget *save_at_refresh1;
+-extern GtkWidget *save_as2;
+ 
+ /* layouts */
+ extern GtkListStore *command_info_table;
+@@ -39,8 +35,8 @@
+ static gboolean
+ autorefresh_handler (gpointer data)
+ {
+-	gtk_list_store_clear (command_info_table);
+-	update_clist ();
++	on_refresh_clicked (NULL,NULL);
++	
+ 	if (state_save)
+ 	{
+ 		time_t t;
+@@ -59,24 +55,14 @@
+ 	cicle--;
+ 	if (!cicle) {
+ 		timeout_id = 0;
+-		
+-		if (window)
+-		{
+-		
+-			gtk_widget_set_sensitive (button1,TRUE);
+-			gtk_widget_set_sensitive (label1,TRUE);
+-			gtk_widget_set_sensitive (label5,TRUE);
+-			gtk_widget_set_sensitive (check_save,TRUE);
+-			gtk_widget_set_sensitive (spinbutton1,TRUE);
+-			gtk_widget_set_sensitive (spinbutton2,TRUE);
+-			gtk_widget_set_sensitive (button2,FALSE);
+-			
+-		}
+-		
+-		gtk_widget_set_sensitive (save_at_refresh1,TRUE);
+-		gtk_widget_set_sensitive (save_as2,TRUE);
+-		
+-		refresh_started = FALSE;
++
++		gtk_widget_set_sensitive (button1,TRUE);
++		gtk_widget_set_sensitive (label1,TRUE);
++		gtk_widget_set_sensitive (label5,TRUE);
++		gtk_widget_set_sensitive (check_save,TRUE);
++		gtk_widget_set_sensitive (spinbutton1,TRUE);
++		gtk_widget_set_sensitive (spinbutton2,TRUE);
++		gtk_widget_set_sensitive (button2,FALSE);
+ 		
+ 		return FALSE;
+ 	}
+@@ -93,11 +79,15 @@
+ 	cicle = gtk_spin_button_get_value_as_int((GtkSpinButton *)spinbutton2);
+ 	spin2 = (gdouble) cicle;
+ 	state_save = gtk_toggle_button_get_active ((GtkToggleButton *)check_save);
+-	gtk_widget_destroy (GTK_WIDGET(user_data));
+ 	
+-	gtk_widget_set_sensitive (save_at_refresh1,FALSE);
+-	gtk_widget_set_sensitive (save_as2,FALSE);
+-	refresh_started = TRUE;
++	gtk_widget_set_sensitive (button1,FALSE);
++        gtk_widget_set_sensitive (label1,FALSE);
++        gtk_widget_set_sensitive (label5,FALSE);
++        gtk_widget_set_sensitive (check_save,FALSE);
++        gtk_widget_set_sensitive (spinbutton1,FALSE);
++        gtk_widget_set_sensitive (spinbutton2,FALSE);
++        gtk_widget_set_sensitive (button2,TRUE);
++							
+ 	
+ 	if (state_save)
+ 		on_save_as_clicked (NULL,GINT_TO_POINTER(4));
+@@ -109,14 +99,7 @@
+ void 
+ start_save_autorefresh (gchar *filename)
+ {
+-	if (!strlen(filename))
+-	{
+-		gtk_widget_set_sensitive (save_at_refresh1,TRUE);
+-		gtk_widget_set_sensitive (save_as2,TRUE);
+-		refresh_started = FALSE;
+-		
+-		return;
+-	}
++	if (!strlen(filename))	return;
+ 	
+ 	filenameatrefresh = g_strdup (filename);
+ 	
+@@ -132,8 +115,6 @@
+ 			timeout_id = 0;
+ 		}
+ 		
+-	gtk_widget_set_sensitive (save_at_refresh1,TRUE);
+-	gtk_widget_set_sensitive (save_as2,TRUE);
+ 	gtk_widget_set_sensitive (button1,TRUE);
+ 	gtk_widget_set_sensitive (label1,TRUE);
+ 	gtk_widget_set_sensitive (label5,TRUE);
+@@ -142,7 +123,6 @@
+ 	gtk_widget_set_sensitive (spinbutton2,TRUE);
+ 	gtk_widget_set_sensitive (button2,FALSE);
+ 		
+-	refresh_started = FALSE;
+ }
+ 
+ /* close with ESC or Return auto_refresh Dialog */
+@@ -246,21 +226,8 @@
+   button2 = gtk_button_new_with_mnemonic (_("Stop"));
+   gtk_widget_show (button2);
+   gtk_container_add (GTK_CONTAINER (hbuttonbox4), button2);
++  gtk_widget_set_sensitive (button2,FALSE);
+   
+-  if (refresh_started)
+-  {
+-	  gtk_widget_set_sensitive (button1,FALSE);
+-	  gtk_widget_set_sensitive (label1,FALSE);
+-	  gtk_widget_set_sensitive (label5,FALSE);
+-	  gtk_widget_set_sensitive (check_save,FALSE);
+-	  gtk_widget_set_sensitive (spinbutton1,FALSE);
+-	  gtk_widget_set_sensitive (spinbutton2,FALSE);
+-	  
+-  }
+-  else
+-  {
+-	  gtk_widget_set_sensitive (button2,FALSE);
+-  }
+   
+   gtk_widget_show (window);
+   gdk_window_raise (window->window);
