@@ -5,7 +5,7 @@ Version:	0.9.16
 Release:	1
 License:	GPL
 Group:		X11/Applications/System
-Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/glsof/%{name}-%{version}.tar.gz
 # Source0-md5:	5ad5f2a6908be713753d9826c38e3e2c
 Source1:	%{name}.desktop
 Patch0:		%{name}-autorefresh.patch
@@ -21,7 +21,7 @@ glsof is a lsof GUI. You can Save output, Refresh (or Automatic
 Refresh) output, select fields of output and apply lsof commands.
 
 %description -l pl
-glsof to GUI do lsof. Mo¿esz zachowywaæ wyj¶cie, od¶wie¿aæ (lub
+glsof to GUI do lsof. Mo¿na zachowywaæ wyj¶cie, od¶wie¿aæ (lub
 automatycznie od¶wie¿aæ) wyj¶cie, wybieraæ pola wyj¶cia i u¿ywaæ
 komend lsof.
 
@@ -35,7 +35,6 @@ komend lsof.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
 
 %{__make} install \
