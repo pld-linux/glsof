@@ -1,17 +1,17 @@
 Summary:	GUI for lsof
 Summary(pl):	GUI do lsof
 Name:		glsof
-Version:	0.9.16
+Version:	0.9.17
 Release:	1
 License:	GPL
 Group:		X11/Applications/System
 Source0:	http://dl.sourceforge.net/glsof/%{name}-%{version}.tar.gz
-# Source0-md5:	5ad5f2a6908be713753d9826c38e3e2c
-Source1:	%{name}.desktop
-Patch0:		%{name}-autorefresh.patch
+# Source0-md5:	1eb3dafb3929b7cd2ba9cff8643f8689
+Patch0:		%{name}-desktop.patch
 URL:		http://glsof.sourceforge.net/
-BuildRequires:	gtk+2-devel >= 2.0.0
-BuildRequires:	libxml2-devel
+BuildRequires:	GConf2-devel
+BuildRequires:	gtk+2-devel
+BuildRequires:	libgnomeui-devel
 BuildRequires:	pkgconfig
 Requires:	lsof
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -35,13 +35,9 @@ komend lsof.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-install pixmaps/logo.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
-install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 
 %find_lang %{name}
 
