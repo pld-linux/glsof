@@ -1,0 +1,17 @@
+diff -urN glsof-0.9.17.orig/data/glsof.desktop.in glsof-0.9.17/data/glsof.desktop.in
+--- glsof-0.9.17.orig/data/glsof.desktop.in	2004-11-20 12:40:21.000000000 +0100
++++ glsof-0.9.17/data/glsof.desktop.in	2004-11-21 23:07:24.439195760 +0100
+@@ -2,11 +2,10 @@
+ _Name=Glsof
+ _Comment=GUI for LSOF
+ Exec=glsof
+-Icon=
++Icon=glsof-logo.png
+ Terminal=false
+ Type=Application
+-
+-Categories=Application;System;
++Categories=GTK;System;Monitor;
+ StartupNotify=true
+ Encoding=UTF-8
+ 
