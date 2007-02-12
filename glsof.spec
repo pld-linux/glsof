@@ -1,5 +1,5 @@
 Summary:	GUI for lsof
-Summary(pl):	GUI do lsof
+Summary(pl.UTF-8):   GUI do lsof
 Name:		glsof
 Version:	0.9.17
 Release:	1
@@ -20,9 +20,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 glsof is a lsof GUI. You can Save output, Refresh (or Automatic
 Refresh) output, select fields of output and apply lsof commands.
 
-%description -l pl
-glsof to GUI do lsof. Mo¿na zachowywaæ wyj¶cie, od¶wie¿aæ (lub
-automatycznie od¶wie¿aæ) wyj¶cie, wybieraæ pola wyj¶cia i u¿ywaæ
+%description -l pl.UTF-8
+glsof to GUI do lsof. MoÅ¼na zachowywaÄ‡ wyjÅ›cie, odÅ›wieÅ¼aÄ‡ (lub
+automatycznie odÅ›wieÅ¼aÄ‡) wyjÅ›cie, wybieraÄ‡ pola wyjÅ›cia i uÅ¼ywaÄ‡
 komend lsof.
 
 %prep
