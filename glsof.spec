@@ -1,5 +1,5 @@
 Summary:	GUI for lsof
-Summary(pl.UTF-8):   GUI do lsof
+Summary(pl.UTF-8):	GUI do lsof
 Name:		glsof
 Version:	0.9.17
 Release:	1
